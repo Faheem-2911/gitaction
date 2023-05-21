@@ -1,0 +1,29 @@
+name: Write Comment on YouTube Video
+on:
+  push:
+    branches:
+      - main
+
+env:
+  GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
+  YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+
+jobs:
+  comment:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+
+      - name: Install dependencies
+        run: pip install google-api-python-client
+
+      - name: Write Comment
+        run: |
+          python write_comment.py
